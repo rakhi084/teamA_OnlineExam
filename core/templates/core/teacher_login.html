@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Teacher Login | ExamSecure
+    </title>
+
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- BOOTSTRAP ICONS -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+
+        body{
+            font-family:'Segoe UI',sans-serif;
+            background-color:#f1f5f9;
+        }
+
+        /* NAVBAR */
+
+        .navbar{
+            box-shadow:0 2px 10px rgba(0,0,0,0.08);
+            background-color:#3666d5;
+            
+        }
+
+        .btn-signup{
+            background-color:#22c55e;
+            color:white;
+            border:none;
+        }
+
+        .btn-signup:hover{
+            background-color:#16a34a;
+            color:white;
+        }
+
+        /* LOGIN */
+
+        .login-wrapper{
+            min-height:85vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:40px 15px;
+        }
+
+        .login-card{
+            background:white;
+            border-radius:18px;
+            padding:40px;
+            width:100%;
+            max-width:450px;
+            box-shadow:0 8px 30px rgba(0,0,0,0.08);
+        }
+
+        .login-title{
+            color:#1e3a8a;
+            font-weight:bold;
+        }
+
+        .teacher-badge{
+            background-color:#dbeafe;
+            color:#1d4ed8;
+            display:inline-block;
+            padding:6px 14px;
+            border-radius:50px;
+            font-size:14px;
+            font-weight:600;
+            margin-bottom:15px;
+        }
+
+        .form-control{
+            height:50px;
+            border-radius:10px;
+        }
+
+        .btn-login{
+            background-color:#2563eb;
+            color:white;
+            border:none;
+            height:50px;
+            border-radius:10px;
+            font-weight:600;
+        }
+
+        .btn-login:hover{
+            background-color:#1d4ed8;
+            color:white;
+        }
+
+        /* PASSWORD EYE */
+
+        .password-wrapper{
+            position:relative;
+        }
+
+        .toggle-password{
+            position:absolute;
+            top:50%;
+            right:15px;
+            transform:translateY(-50%);
+            cursor:pointer;
+            color:#6b7280;
+            font-size:18px;
+        }
+
+        /* FOOTER */
+
+        .footer{
+            background-color:#3666d5;
+        }
+
+        .footer a{
+            color:#cbd5f5;
+            text-decoration:none;
+            font-size:14px;
+        }
+
+        .footer a:hover{
+            color:white;
+            text-decoration:underline;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg  px-4 sticky-top">
+
+    <!-- LOGO -->
+    <a class="navbar-brand fw-bold" href="/">
+        ExamSecure
+    </a>
+
+    <!-- MOBILE MENU -->
+    <button 
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+    >
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- NAVBAR CONTENT -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+        <!-- LEFT MENU -->
+        <ul class="navbar-nav me-auto ms-4">
+
+            <!-- HOME -->
+            <li class="nav-item">
+                <a class="nav-link active" href="/">
+                    Home
+                </a>
+            </li>
+
+            <!-- HOW IT WORKS -->
+            <li class="nav-item dropdown">
+
+                <a class="nav-link dropdown-toggle"
+                   href="#"
+                   role="button"
+                   data-bs-toggle="dropdown">
+
+                    How it Works
+
+                </a>
+
+                <ul class="dropdown-menu">
+
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            Student Flow
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            Teacher Flow
+                        </a>
+                    </li>
+
+                </ul>
+
+            </li>
+
+            <!-- ABOUT -->
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    About
+                </a>
+            </li>
+
+            <!-- CONTACT -->
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    Contact
+                </a>
+            </li>
+
+        </ul>
+
+        <!-- RIGHT SIDE BUTTONS -->
+        <div class="d-flex">
+
+            <a href="{% url 'teacher_login' %}" 
+               class="btn btn-outline-light me-2">
+
+                Teacher Sign In
+
+            </a>
+
+            <a href="{% url 'signup' %}" 
+               class="btn btn-signup">
+
+                Sign Up
+
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- LOGIN FORM -->
+
+<div class="login-wrapper">
+
+    <div class="login-card">
+
+        <!-- HEADER -->
+
+        <div class="text-center mb-4">
+
+            <div class="teacher-badge">
+                Teacher Portal
+            </div>
+
+            <h2 class="login-title">
+                Teacher Sign In
+            </h2>
+
+            <p class="text-muted">
+                Access your dashboard securely
+            </p>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <!-- EMAIL -->
+
+            <div class="mb-3">
+
+                <label class="form-label fw-semibold">
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    name="email"
+                    class="form-control"
+                    placeholder="Enter your email"
+                    required>
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="mb-3">
+
+                <label class="form-label fw-semibold">
+                    Password
+                </label>
+
+                <div class="password-wrapper">
+
+                    <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        class="form-control"
+                        placeholder="Enter password"
+                        required>
+
+                    <i class="bi bi-eye-slash toggle-password"
+                       id="togglePassword"></i>
+
+                </div>
+
+            </div>
+
+
+            <!-- OPTIONS -->
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <div class="form-check">
+
+                    <input
+                        class="form-check-input"
+                        type="checkbox">
+
+                    <label class="form-check-label">
+                        Remember me
+                    </label>
+
+                </div>
+
+                <a href="#"
+                   class="text-decoration-none small">
+
+                    Forgot Password?
+
+                </a>
+
+            </div>
+
+
+            <!-- BUTTON -->
+
+            <div class="d-grid">
+
+                <button type="submit"
+                        class="btn btn-login">
+
+                    Sign In
+
+                </button>
+
+            </div>
+
+
+            <!-- SIGNUP -->
+
+            <div class="text-center mt-4">
+
+                <p class="mb-0">
+
+                    Don't have an account?
+
+                    <a href="{% url 'signup' %}"
+                       class="text-decoration-none fw-semibold">
+
+                        Create Account
+
+                    </a>
+
+                </p>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- FOOTER -->
+
+<footer class="footer text-white">
+
+    <div class="container py-5">
+
+        <div class="row">
+
+            <!-- BRAND -->
+
+            <div class="col-md-4 mb-4">
+
+                <h5 class="fw-bold">
+                    ExamSecure
+                </h5>
+
+                <p>
+                    Secure and intelligent online examination platform
+                    for schools, colleges, and organizations.
+                </p>
+
+            </div>
+
+
+            <!-- QUICK LINKS -->
+
+            <div class="col-md-2 mb-4">
+
+                <h6 class="fw-bold">
+                    Platform
+                </h6>
+
+                <ul class="list-unstyled">
+
+                    <li>
+                        <a href="#">Features</a>
+                    </li>
+
+                    <li>
+                        <a href="#">Pricing</a>
+                    </li>
+
+                    <li>
+                        <a href="#">Security</a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- RESOURCES -->
+
+            <div class="col-md-2 mb-4">
+
+                <h6 class="fw-bold">
+                    Resources
+                </h6>
+
+                <ul class="list-unstyled">
+
+                    <li>
+                        <a href="#">Documentation</a>
+                    </li>
+
+                    <li>
+                        <a href="#">Support</a>
+                    </li>
+
+                    <li>
+                        <a href="#">Blog</a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- CONTACT -->
+
+            <div class="col-md-4 mb-4">
+
+                <h6 class="fw-bold">
+                    Contact
+                </h6>
+
+                <p>Email: support@examsecure.com</p>
+                <p>Phone: +91 98765 43210</p>
+                <p>Location: Andhra Pradesh, India</p>
+
+            </div>
+
+        </div>
+
+        <hr class="border-light">
+
+        <div class="text-center">
+
+            <small>
+                © 2026 ExamSecure. All Rights Reserved.
+            </small>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- PASSWORD TOGGLE -->
+
+<script>
+
+    const togglePassword =
+        document.getElementById(
+            'togglePassword'
+        );
+
+    const password =
+        document.getElementById(
+            'password'
+        );
+
+    togglePassword.addEventListener(
+        'click',
+        function(){
+
+            const type =
+                password.getAttribute(
+                    'type'
+                ) === 'password'
+                ? 'text'
+                : 'password';
+
+            password.setAttribute(
+                'type',
+                type
+            );
+
+            this.classList.toggle(
+                'bi-eye'
+            );
+
+            this.classList.toggle(
+                'bi-eye-slash'
+            );
+        }
+    );
+
+</script>
+
+</body>
+
+</html>

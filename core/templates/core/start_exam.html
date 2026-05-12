@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ exam.title }}</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f4f7fc;
+            padding: 30px;
+        }
+
+        .exam-container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .top-bar {
+            background: white;
+            border-radius: 18px;
+            padding: 20px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+        }
+
+        .exam-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .timer-box {
+            background: #dc2626;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .question-card {
+            background: white;
+            border-radius: 18px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .question-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #111827;
+        }
+
+        .option {
+            margin-bottom: 15px;
+            padding: 14px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            transition: 0.3s;
+            cursor: pointer;
+            margin-left: 15px;
+        }
+
+        .option:hover {
+            background: #eff6ff;
+            border-color: #2563eb;
+        }
+
+        .option input {
+            margin-right: 10px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: #16a34a;
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background: #15803d;
+        }
+
+        @media(max-width: 768px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .top-bar {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .exam-title {
+                font-size: 22px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+    
+
+    <div class="exam-container">
+
+        <div class="top-bar">
+
+            <h1 class="exam-title">
+                {{ exam.title }}
+            </h1>
+
+            <div class="timer-box">
+                Time Left: <span id="timer"></span>
+            </div>
+
+        </div>
+
+        <form
+            id="examForm"
+            method="POST"
+            action="{% url 'submit_exam' exam.id %}">
+
+            {% csrf_token %}
+
+            {% for question in questions %}
+
+                <div class="question-card">
+
+                    <div class="question-title">
+                        {{ forloop.counter }}.
+                        {{ question.question_text }}
+                    </div>
+
+                    <label class="option">
+                        <input
+                            type="radio"
+                            name="question_{{ question.id }}"
+                            value="{{ question.option1 }}">
+
+                        {{ question.option1 }}
+                    </label>
+
+                    <label class="option">
+                        <input
+                            type="radio"
+                            name="question_{{ question.id }}"
+                            value="{{ question.option2 }}">
+
+                        {{ question.option2 }}
+                    </label>
+
+                    <label class="option">
+                        <input
+                            type="radio"
+                            name="question_{{ question.id }}"
+                            value="{{ question.option3 }}">
+
+                        {{ question.option3 }}
+                    </label>
+
+                    <label class="option">
+                        <input
+                            type="radio"
+                            name="question_{{ question.id }}"
+                            value="{{ question.option4 }}">
+
+                        {{ question.option4 }}
+                    </label>
+
+                </div>
+
+            {% endfor %}
+
+            <button type="submit" class="submit-btn">
+                Submit Exam
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <script>
+
+        // EXAM DURATION IN MINUTES
+        let timeLeft = {{ exam.duration }}*60;
+
+        const timer = document.getElementById('timer');
+
+        const examForm = document.getElementById('examForm');
+
+
+        function updateTimer() {
+
+            const minutes = Math.floor(timeLeft / 60);
+
+            const seconds = timeLeft % 60;
+
+            timer.innerHTML =
+                `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+            // AUTO SUBMIT
+            if (timeLeft <= 0) {
+
+                alert('Time is up! Exam will be submitted automatically.');
+
+                examForm.submit();
+            }
+
+            timeLeft--;
+        }
+
+        updateTimer();
+
+        setInterval(updateTimer, 1000);
+
+    </script>
+
+</body>
+
+</html>

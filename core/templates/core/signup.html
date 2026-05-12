@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Signup | ExamSecure</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+
+        body{
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f1f5f9;
+        }
+
+        /* NAVBAR */
+        .navbar{
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .btn-signup{
+            background-color: #22c55e;
+            color: white;
+            border: none;
+        }
+
+        .btn-signup:hover{
+            background-color: #16a34a;
+            color: white;
+        }
+
+        /* SIGNUP SECTION */
+        .signup-section{
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 15px;
+        }
+
+        .signup-card{
+            background: white;
+            border-radius: 18px;
+            padding: 40px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+
+        .signup-title{
+            color: #1e3a8a;
+            font-weight: bold;
+        }
+
+        .form-control{
+            height: 48px;
+            border-radius: 10px;
+        }
+
+        .teacher-badge{
+            background-color: #dbeafe;
+            color: #1d4ed8;
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        /* FOOTER */
+        .footer{
+            background-color: #0f172a;
+        }
+
+        .footer a{
+            color: #cbd5f5;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .footer a:hover{
+            color: white;
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 sticky-top">
+
+    <!-- LOGO -->
+    <a class="navbar-brand fw-bold" href="/">
+        ExamSecure
+    </a>
+
+    <!-- MOBILE MENU -->
+    <button 
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+    >
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- NAVBAR CONTENT -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+        <!-- LEFT MENU -->
+        <ul class="navbar-nav me-auto ms-4">
+
+            <!-- HOME -->
+            <li class="nav-item">
+                <a class="nav-link active" href="/">
+                    Home
+                </a>
+            </li>
+
+            <!-- HOW IT WORKS -->
+            <li class="nav-item dropdown">
+
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    How it Works
+                </a>
+
+                <ul class="dropdown-menu">
+
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            Student Flow
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            Teacher Flow
+                        </a>
+                    </li>
+
+                </ul>
+
+            </li>
+
+            <!-- ABOUT -->
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    About
+                </a>
+            </li>
+
+            <!-- CONTACT -->
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    Contact
+                </a>
+            </li>
+
+        </ul>
+
+        <!-- RIGHT SIDE BUTTONS -->
+        <div class="d-flex">
+
+            <a href="{% url 'teacher_login' %}" 
+               class="btn btn-outline-light me-2">
+                Teacher Sign In
+            </a>
+
+            <a href="{% url 'signup' %}" 
+               class="btn btn-signup">
+                Sign Up
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- SIGNUP SECTION -->
+<section class="signup-section">
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-5 col-md-7">
+
+                <div class="signup-card">
+
+                    <!-- HEADER -->
+                    <div class="text-center mb-4">
+
+                        <div class="teacher-badge">
+                            Teacher Registration Only
+                        </div>
+
+                        <h2 class="signup-title">
+                            Create Teacher Account
+                        </h2>
+
+                        <p class="text-muted">
+                            Only teachers and institutions are allowed to register.
+                        </p>
+
+                    </div>
+
+                    <!-- FORM -->
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <!-- FULL NAME -->
+                        <div class="mb-3">
+
+                            <label class="form-label fw-semibold">
+                                Full Name
+                            </label>
+
+                            <input 
+                                type="text"
+                                name="full_name"
+                                class="form-control"
+                                placeholder="Enter full name"
+                                required
+                            >
+
+                        </div>
+
+                        <!-- EMAIL -->
+                        <div class="mb-3">
+
+                            <label class="form-label fw-semibold">
+                                Official Email
+                            </label>
+
+                            <input 
+                                type="email"
+                                name="email"
+                                class="form-control"
+                                placeholder="Enter official email"
+                                required
+                            >
+
+                        </div>
+
+                        <!-- INSTITUTION -->
+                        <div class="mb-3">
+
+                            <label class="form-label fw-semibold">
+                                Institution Name
+                            </label>
+
+                            <input 
+                                type="text"
+                                name="institution"
+                                class="form-control"
+                                placeholder="Enter institution name"
+                                required
+                            >
+
+                        </div>
+
+                        <!-- PASSWORD -->
+<div class="mb-3">
+
+    <label class="form-label fw-semibold">
+        Password
+    </label>
+
+    <div class="position-relative">
+
+        <input 
+            type="password"
+            name="password"
+            id="password"
+            class="form-control pe-5"
+            placeholder="Create password"
+            required
+        >
+
+        <span
+            onclick="togglePassword()"
+            style="
+                position:absolute;
+                top:50%;
+                right:15px;
+                transform:translateY(-50%);
+                cursor:pointer;
+                z-index:10;
+            "
+        >
+
+            <i class="bi bi-eye-slash"
+               id="passwordIcon"></i>
+
+        </span>
+
+    </div>
+
+</div>
+
+                        <!-- CONFIRM PASSWORD -->
+<div class="mb-4">
+
+    <label class="form-label fw-semibold">
+        Confirm Password
+    </label>
+
+    <div class="position-relative">
+
+        <input 
+            type="password"
+            name="confirm_password"
+            id="confirmPassword"
+            class="form-control pe-5"
+            placeholder="Confirm password"
+            required
+        >
+
+        <span
+            onclick="toggleConfirmPassword()"
+            style="
+                position:absolute;
+                top:50%;
+                right:15px;
+                transform:translateY(-50%);
+                cursor:pointer;
+                z-index:10;
+            "
+        >
+
+            <i class="bi bi-eye-slash"
+               id="confirmPasswordIcon"></i>
+
+        </span>
+
+    </div>
+
+</div>
+
+                        <!-- CHECKBOX -->
+                        <div class="form-check mb-4">
+
+                            <input 
+                                class="form-check-input"
+                                type="checkbox"
+                                required
+                            >
+
+                            <label class="form-check-label">
+                                I confirm that I am registering as a teacher/institution.
+                            </label>
+
+                        </div>
+
+                        <!-- SUBMIT -->
+                        <div class="d-grid">
+
+                            <button type="submit" class="btn btn-signup btn-lg">
+                                Create Teacher Account
+                            </button>
+
+                        </div>
+
+                        <!-- LOGIN -->
+                        <div class="text-center mt-4">
+
+                            <p class="mb-0">
+
+                                Already have an account?
+
+                                <a href="{% url 'teacher_login' %}" 
+                                   class="text-decoration-none fw-semibold">
+                                    Login
+                                </a>
+
+                            </p>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer class="footer text-white mt-5">
+
+    <div class="container py-5">
+
+        <div class="row">
+
+            <!-- BRAND -->
+            <div class="col-md-4 mb-4">
+
+                <h5 class="fw-bold">
+                    ExamSecure
+                </h5>
+
+                <p>
+                    Secure and intelligent online examination platform
+                    for schools, colleges, and organizations.
+                </p>
+
+            </div>
+
+            <!-- QUICK LINKS -->
+            <div class="col-md-2 mb-4">
+
+                <h6 class="fw-bold">
+                    Platform
+                </h6>
+
+                <ul class="list-unstyled">
+
+                    <li>
+                        <a href="#">Features</a>
+                    </li>
+
+                    <li>
+                        <a href="#">Pricing</a>
+                    </li>
+
+                    <li>
+                        <a href="#">Security</a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <!-- RESOURCES -->
+            <div class="col-md-2 mb-4">
+
+                <h6 class="fw-bold">
+                    Resources
+                </h6>
+
+                <ul class="list-unstyled">
+
+                    <li>
+                        <a href="#">Documentation</a>
+                    </li>
+
+                    <li>
+                        <a href="#">Support</a>
+                    </li>
+
+                    <li>
+                        <a href="#">Blog</a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <!-- CONTACT -->
+            <div class="col-md-4 mb-4">
+
+                <h6 class="fw-bold">
+                    Contact
+                </h6>
+
+                <p>Email: support@examsecure.com</p>
+                <p>Phone: +91 98765 43210</p>
+                <p>Location: Andhra Pradesh, India</p>
+
+            </div>
+
+        </div>
+
+        <hr class="border-light">
+
+        <div class="text-center">
+
+            <small>
+                © 2026 ExamSecure. All Rights Reserved.
+            </small>
+
+        </div>
+
+    </div>
+
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function togglePassword(){
+
+    const password =
+        document.getElementById(
+            "password"
+        );
+
+    const icon =
+        document.getElementById(
+            "passwordIcon"
+        );
+
+    if(password.type === "password"){
+
+        password.type = "text";
+
+        icon.classList.remove(
+            "bi-eye-slash"
+        );
+
+        icon.classList.add(
+            "bi-eye"
+        );
+
+    }else{
+
+        password.type = "password";
+
+        icon.classList.remove(
+            "bi-eye"
+        );
+
+        icon.classList.add(
+            "bi-eye-slash"
+        );
+    }
+}
+
+
+
+function toggleConfirmPassword(){
+
+    const password =
+        document.getElementById(
+            "confirmPassword"
+        );
+
+    const icon =
+        document.getElementById(
+            "confirmPasswordIcon"
+        );
+
+    if(password.type === "password"){
+
+        password.type = "text";
+
+        icon.classList.remove(
+            "bi-eye-slash"
+        );
+
+        icon.classList.add(
+            "bi-eye"
+        );
+
+    }else{
+
+        password.type = "password";
+
+        icon.classList.remove(
+            "bi-eye"
+        );
+
+        icon.classList.add(
+            "bi-eye-slash"
+        );
+    }
+}
+
+</script>
+
+</body>
+</html>

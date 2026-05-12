@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Exam Result</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-light">
+
+<div class="container py-5">
+
+    <div class="card shadow p-5 text-center">
+
+        <h2>Exam Result</h2>
+
+<p>Name: {{ student.name }}</p>
+
+<p>Email: {{ student.email }}</p>
+
+<p>University: {{ student.university_name }}</p>
+
+<hr>
+
+<p>Exam: {{ exam.title }}</p>
+
+<p>Obtained Marks: {{ obtained_marks }}</p>
+
+<p>Total Marks: {{ total_marks }}</p>
+
+<p>Percentage: {{ percentage }}%</p>
+
+        <a href="/" class="btn btn-primary">
+
+            Back to Home
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

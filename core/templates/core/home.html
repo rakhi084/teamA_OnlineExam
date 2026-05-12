@@ -1,0 +1,33 @@
+{% extends 'core/base.html' %} {% block title %}Home | ExamSecure{% endblock %}
+{% block content %}
+
+<div class="hero">
+  <h1>Smart Online MCQ Examination Platform</h1>
+
+  <p>
+    Create secure timed MCQ exams, generate unique test codes, allow students to
+    attend exams online, and view results instantly.
+  </p>
+ <form 
+    class="d-flex me-3 exam-form" 
+    method="POST" 
+    action="{% url 'student_access' %}"
+>
+
+    {% csrf_token %}
+
+    <input 
+        class="form-control me-2 exam-input"
+        type="text"
+        name="student_key"
+        placeholder="Enter Student Key"
+        required
+    >
+
+    <!-- <button class="btn btn-outline-light">
+        Enter
+    </button> -->
+
+</form>
+</div>
+{% endblock %}

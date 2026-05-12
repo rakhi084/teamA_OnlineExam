@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}ExamSecure{% endblock %}</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .hero {
+            padding: 100px 20px;
+            text-align: center;
+            background: linear-gradient(to right, #4f74dc, #0d45c6);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .btn-signup {
+            background-color: #22c55e;
+            color: white;
+        }
+
+        .btn-signup:hover {
+            background-color: #16a34a;
+        }
+
+        .footer {
+            background-color: #4171e2;
+        }
+
+        .footer a {
+            color: #cbd5f5;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .footer a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .footer h6 {
+            margin-bottom: 15px;
+        }
+
+        /* NEW SECTIONS */
+        .info-section {
+            padding: 70px 20px;
+        }
+
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #1e3a8a;
+        }
+
+        .contact-box {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+         /* NAVBAR */
+
+    .navbar{
+        /* background:linear-gradient(135deg, #2563eb, #16a34a) !important; */
+        background:#2563eb !important;
+        padding:16px 40px;
+        box-shadow:0 4px 15px rgba(0,0,0,0.15);
+    }
+
+    /* LOGO */
+
+    .navbar-brand{
+        font-size:28px;
+        font-weight:700;
+        color:white !important;
+        letter-spacing:0.5px;
+    }
+
+    /* NAV LINKS */
+
+    .nav-link{
+        color:white !important;
+        font-weight:500;
+        margin-right:10px;
+        transition:0.3s;
+    }
+
+    .nav-link:hover{
+        color:#dbeafe !important;
+    }
+
+    /* DROPDOWN */
+
+    .dropdown-menu{
+        border:none;
+        border-radius:12px;
+        padding:10px;
+        box-shadow:0 5px 18px rgba(0,0,0,0.12);
+    }
+
+    .dropdown-item{
+        border-radius:8px;
+        padding:10px 14px;
+        transition:0.3s;
+    }
+
+    .dropdown-item:hover{
+        background:#eff6ff;
+        color:#2563eb;
+    }
+
+    /* INPUT */
+
+    .form-control{
+        border:none;
+        border-radius:10px;
+        padding:10px 14px;
+    }
+
+    .form-control:focus{
+        box-shadow:0 0 0 4px rgba(255,255,255,0.2);
+        border:none;
+    }
+
+    /* ENTER BUTTON */
+
+    .btn-outline-light{
+        border-radius:10px;
+        padding:10px 18px;
+        font-weight:500;
+        transition:0.3s;
+    }
+
+    .btn-outline-light:hover{
+        background:white;
+        color:#2563eb;
+    }
+
+    /* SIGNUP BUTTON */
+
+    .btn-signup{
+        background:white;
+        color:#2563eb;
+        padding:10px 22px;
+        border-radius:10px;
+        font-weight:600;
+        transition:0.3s;
+    }
+
+    .btn-signup:hover{
+        background:#dbeafe;
+        color:#1d4ed8;
+    }
+
+    /* MOBILE */
+
+    @media(max-width:991px){
+
+        .navbar{
+            padding:16px 20px;
+        }
+
+        .navbar-collapse{
+            margin-top:20px;
+        }
+
+        .form-control{
+            margin-bottom:10px;
+        }
+
+    }
+    .exam-form {
+    width: 320px;
+}
+
+.exam-input {
+    min-width: 180px;
+}
+
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+    <a class="navbar-brand fw-bold" href="/">ExamSecure</a>
+
+    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+        <ul class="navbar-nav me-auto ms-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">How it Works</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#how-it-works">Student Flow</a></li>
+                    <li><a class="dropdown-item" href="#how-it-works">Teacher Flow</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#about">About</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#contact">Contact</a>
+            </li>
+        </ul>
+
+        <form class="d-flex me-3" method="POST" action="{% url 'student_access' %}">
+
+    {% csrf_token %}
+
+    <input 
+        class="form-control me-2"
+        type="text"
+        name="student_key"
+        placeholder="Enter Student Key"
+        required
+    >
+
+    <button class="btn btn-outline-light">
+        Enter
+    </button>
+
+</form>
+
+        <a href="{% url 'teacher_login' %}" class="btn btn-outline-light me-2">Teacher Sign In</a>
+        <a href="{% url 'signup' %}" class="btn btn-signup">Sign Up</a>
+
+    </div>
+</nav>
+{% if error %}
+
+<div class="container mt-3">
+
+    <div class="alert alert-danger">
+
+        {{ error }}
+
+    </div>
+
+</div>
+
+{% endif %}
+
+<!-- PAGE CONTENT -->
+{% block content %}
+{% endblock %}
+
+<!-- ABOUT SECTION -->
+<section id="about" class="info-section">
+
+    <div class="container">
+
+        <div class="row align-items-center">
+
+            <div class="col-md-6">
+
+                <h2 class="section-title">
+                    About ExamSecure
+                </h2>
+
+                <p>
+                    ExamSecure is a smart and secure online MCQ examination platform
+                    built for teachers, colleges, schools, and institutions.
+                </p>
+
+                <p>
+                    Teachers can register, create timed MCQ exams,
+                    generate secure test codes, and monitor student performance
+                    through an easy-to-use dashboard.
+                </p>
+
+                <p>
+                    Students can access exams instantly using the generated
+                    test code and receive results immediately after submission.
+                </p>
+
+            </div>
+
+            <div class="col-md-6 text-center">
+
+                <img
+                    src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png"
+                    class="img-fluid"
+                    style="max-width:300px;"
+                >
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works" class="info-section bg-light">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <h2 class="section-title">
+                How ExamSecure Works
+            </h2>
+
+            <p>
+                Simple and secure workflow for teachers and students.
+            </p>
+
+        </div>
+
+        <div class="row">
+
+            <!-- TEACHER FLOW -->
+            <div class="col-md-6 mb-4">
+
+                <div class="contact-box h-100">
+
+                    <h4 class="mb-3">
+                        Teacher Workflow
+                    </h4>
+
+                    <ul>
+
+                        <li>
+                            Teacher registers and logs into dashboard
+                        </li>
+
+                        <li>
+                            Creates MCQ-based online tests
+                        </li>
+
+                        <li>
+                            Sets exam duration and questions
+                        </li>
+
+                        <li>
+                            Secure test code is automatically generated
+                        </li>
+
+                        <li>
+                            Views student submissions and results instantly
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+            <!-- STUDENT FLOW -->
+            <div class="col-md-6 mb-4">
+
+                <div class="contact-box h-100">
+
+                    <h4 class="mb-3">
+                        Student Workflow
+                    </h4>
+
+                    <ul>
+
+                        <li>
+                            Student enters the secure test code
+                        </li>
+
+                        <li>
+                            Fills student details before exam
+                        </li>
+
+                        <li>
+                            Starts the timed MCQ examination
+                        </li>
+
+                        <li>
+                            Submits answers online securely
+                        </li>
+
+                        <li>
+                            Instantly views exam score and percentage
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- CONTACT SECTION -->
+<section id="contact" class="info-section">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <h2 class="section-title">
+                Contact Us
+            </h2>
+
+            <p>
+                Need support or have questions about ExamSecure?
+            </p>
+
+        </div>
+
+        <div class="row justify-content-center">
+
+            <div class="col-md-8">
+
+                <div class="contact-box">
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+                                    Full Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Enter your name"
+                                >
+
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+                                    Email
+                                </label>
+
+                                <input
+                                    type="email"
+                                    class="form-control"
+                                    placeholder="Enter your email"
+                                >
+
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Subject
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Subject"
+                            >
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Message
+                            </label>
+
+                            <textarea
+                                class="form-control"
+                                rows="5"
+                                placeholder="Write your message"
+                            ></textarea>
+
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="btn btn-signup px-4"
+                        >
+                            Send Message
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer class="footer mt-5">
+
+    <div class="container py-5">
+
+        <div class="row text-white">
+
+            <!-- BRAND -->
+            <div class="col-md-3 mb-4">
+
+                <h5 class="fw-bold">
+                    ExamSecure
+                </h5>
+
+                <p>
+                    Secure online MCQ examination system for teachers,
+                    colleges, and institutions.
+                </p>
+
+            </div>
+
+            <!-- FEATURES -->
+            <div class="col-md-3 mb-4">
+
+                <h6 class="fw-bold">
+                    Features
+                </h6>
+
+                <ul class="list-unstyled">
+
+                    <li>
+                        <a href="#">
+                            Timed Online Exams
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            MCQ Question Management
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Instant Result Generation
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <!-- TEACHERS -->
+            <div class="col-md-3 mb-4">
+
+                <h6 class="fw-bold">
+                    Teacher Access
+                </h6>
+
+                <ul class="list-unstyled">
+
+                    <li>
+                        <a href="{% url 'signup' %}">
+                            Teacher Registration
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'teacher_login' %}">
+                            Teacher Login
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Dashboard Management
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <!-- SUPPORT -->
+            <div class="col-md-3 mb-4">
+
+                <h6 class="fw-bold">
+                    Support
+                </h6>
+
+                <ul class="list-unstyled">
+
+                    <li>
+                        <a href="#contact">
+                            Contact Support
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Help Center
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Documentation
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+        <hr class="border-light">
+
+        <div class="text-center text-white">
+
+            <small>
+                © 2026 ExamSecure. All Rights Reserved.
+            </small>
+
+        </div>
+
+    </div>
+
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
